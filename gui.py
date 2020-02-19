@@ -2,11 +2,13 @@
 # ------------------------------------
 
 import tkinter as tk
-from gpiozero import LED as PIN
+from gpiozero import LED as PIN, OutputDevice
 from gpiozero.pins.pigpio import PiGPIOFactory
 # ====================================
-
-
+# Variable Decleration
+# ------------------------------------
+device = OutputDevice() #GPIO Pin Output Device
+# ====================================
 # Window Creation
 # ------------------------------------
 #Create Window Instance
@@ -24,8 +26,11 @@ txt = tk.Entry(win, width=3)
 txt.grid(column=0, row=1)
 txt.insert(0, "Pin")
 
+#Set Status
+statusvar = tk.StringVar()
+statusvar.set("Pin Status Shown Here")
 #Display Pin Status
-statuslbl = tk.Label(win, text="Pin Status Shown Here", font=("Helvetica", 7))
+statuslbl = tk.Label(win, textvar = statusvar, font=("Helvetica", 7))
 statuslbl.grid(column=0, row=4)
 
 # ====================================
@@ -33,17 +38,20 @@ statuslbl.grid(column=0, row=4)
 # ------------------------------------
 # Pin Factory Configuration
 factory = PiGPIOFactory(host='192.168.2.153')
+
 # On event
 def pinenable():
     PinID = int(txt.get())
-    PIN(PinID, pin_factory=factory).on()
-   # statuslbl(text=("Pim " + PinID + "Is Raised High"))
+    device = OutputDevice(PinID)
+    device.on()
+    statusvar.set("Pim " + txt.get() + " Has Been Raised")
 
 # Off event
 def pindisable():
     PinID = int(txt.get())
-    PIN(PinID, pin_factory=factory).off()
-   # statuslbl(text=("Pim " + PinID + "Has Been Lowered"))
+    device = OutputDevice(PinID)
+    device.on()
+    statusvar.set("Pim " + txt.get() + " Has Been Lowered")
 
 # ====================================
 
