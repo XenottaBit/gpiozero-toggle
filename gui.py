@@ -45,14 +45,12 @@ statuslbl.grid(column=0, row=4)
 def pinenable():
     PinID = int(txt.get())
     Pi.set_mode(PinID, pigpio.OUTPUT)
-    Pi.write(PinID, 1)
     statusvar.set("Pim " + txt.get() + " Has Been Raised")
 
 # Off event
 def pindisable():
     PinID = int(txt.get())
-
-    Pi.write(PinID, 0)
+    Pi.set_mode(PinID, pigpio.OFF)
     statusvar.set("Pim " + txt.get() + " Has Been Lowered")
 
 # ====================================
