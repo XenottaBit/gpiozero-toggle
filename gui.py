@@ -2,14 +2,12 @@
 # ------------------------------------
 
 import tkinter as tk
-import pigpio
-#from gpiozero import LED as PIN, OutputDevice
-#from gpiozero.pins.pigpio import PiGPIOFactory
+from gpiozero import LED as PIN, OutputDevice
+from gpiozero.pins.pigpio import PiGPIOFactory
 # ====================================
 # Variable Decleration
 # ------------------------------------
-#device = OutputDevice() #GPIO Pin Output Device
-Pi = pigpio.pi("192.168.2.153", 8888)
+device = OutputDevice() #GPIO Pin Output Device
 # ====================================
 # Window Creation
 # ------------------------------------
@@ -39,18 +37,20 @@ statuslbl.grid(column=0, row=4)
 # Button Events
 # ------------------------------------
 # Pin Factory Configuration
-#factory = PiGPIOFactory(host='192.168.2.153')
+factory = PiGPIOFactory(host='192.168.2.153')
 
 # On event
 def pinenable():
     PinID = int(txt.get())
-    Pi.set_mode(PinID, pigpio.OUTPUT)
+    led = LED(PinID)
+    led.on()
     statusvar.set("Pim " + txt.get() + " Has Been Raised")
 
 # Off event
 def pindisable():
     PinID = int(txt.get())
-    Pi.set_mode(PinID, pigpio.OFF)
+    led = LED(PinID)
+    led.off()
     statusvar.set("Pim " + txt.get() + " Has Been Lowered")
 
 # ====================================
@@ -66,5 +66,3 @@ btn.grid(column=0, row=3)
 
 #Start GUI/ Create Main Loop
 win.mainloop()
-
-
